@@ -1,0 +1,51 @@
+
+Directory Structure:
+Ensure the following directories exist:
+
+./fedral_police_department-managment_system_backend: Contains the backend code and Dockerfile.
+./integeratd-crime-investigation-system-1ca964fbc587f873a6d33aea9def0ae0f0c622dc: Contains the frontend code and Dockerfile.
+./nginx: Contains the nginx.conf file.
+.env file exists 
+
+
+Docker Compose Commands
+1. Build and Start All Services
+To build the images and start all services (PostgreSQL, backend, frontend, and Nginx):
+bashdocker-compose up -d
+
+The -d flag runs the containers in detached mode (in the background).
+This command builds the federal and federal_front images using their respective Dockerfiles and starts all services.
+
+2. Stop All Services
+To stop and shut down all running containers:
+bashdocker-compose down
+
+This stops and removes the containers but preserves the primary_data volume for PostgreSQL.
+
+3. Rebuild Services
+To rebuild the images (e.g., after code changes) and restart the services:
+bashdocker-compose up -d --build
+
+The --build flag forces Docker to rebuild the images.
+
+4. View Logs
+To view logs for all services:
+bashdocker-compose logs
+To view logs for a specific service (e.g., federal):
+bashdocker-compose logs federal
+Add -f to follow logs in real-time:
+bashdocker-compose logs -f federal
+5. Access Containers
+To access the shell of a running container (e.g., federal):
+bashdocker-compose exec federal /bin/sh
+For PostgreSQL:
+bashdocker-compose exec postgres-federal psql -U myuser -d mydb
+6. Stop and Remove Everything (Including Volumes)
+To stop all services and remove containers, networks, and volumes:
+bashdocker-compose down -v
+
+The -v flag removes the primary_data volume, deleting all PostgreSQL data.
+
+7. Check Running Containers
+To list all running containers:
+bashdocker-compose ps
