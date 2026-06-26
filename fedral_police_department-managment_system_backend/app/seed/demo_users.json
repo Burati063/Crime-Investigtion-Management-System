@@ -1,0 +1,40 @@
+{
+  "roles": [
+    {"name": "admin", "description": "system adminstrator"},
+    {"name": "pre_investigation", "description": "preinvestgation user"},
+    {"name": "department_head", "description": "head of department"},    
+    {"name": "investigator", "description": "Data analyst"},    
+    {"name": "prosecutor", "description": "Data analyst"}
+    
+  ],
+  "users": [
+    {"rank": "Constable", "firstname": "John", "lastname": "Doe","username": "johndoe", "email": "preinvestigation@example.com", "password": "AdminPass123!", "role": "pre_investigation", "department": "Major Crime Division"},
+    {"rank": "Assistant Sergeant", "firstname": "Jane", "lastname": "Smith", "username": "janesmith", "email": "departmenthead@example.com", "password": "AdminPass123!", "role": "department_head", "department": "Financial Crime Division"},
+    {"rank": "Assistant Sergeant", "firstname": "Fiona", "lastname": "Ledger", "username": "fcdhead", "email": "fcdhead@example.com", "password": "AdminPass123!", "role": "department_head", "department": "Major Crime Division"},
+    {"rank": "Assistant Sergeant", "firstname": "Samuel", "lastname": "Specialist", "username": "scdhead", "email": "scdhead@example.com", "password": "AdminPass123!", "role": "department_head", "department": "Specialized Crime Division"},
+    {"rank": "Assistant Sergeant", "firstname": "Alice", "lastname": "Integrity", "username": "acdhead", "email": "acdhead@example.com", "password": "AdminPass123!", "role": "department_head", "department": "Anti-Corruption Division"},
+    {"rank": "Assistant Sergeant", "firstname": "Terry", "lastname": "Tech", "username": "tcdhead", "email": "tcdhead@example.com", "password": "AdminPass123!", "role": "department_head", "department": "Technology Crime Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Emily", "lastname": "Johnson", "username": "emilyjohnson", "email": "investigator@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Financial Crime Division"},
+  {"rank": "Sergeant", "firstname": "Michael", "lastname": "Brown", "username": "michaelbrown", "email": "prosecutor@example.com", "password": "AdminPass123!", "role": "prosecutor", "department": "Financial Crime Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Carlos", "lastname": "Ruiz", "username": "mcinv1", "email": "mc_inv1@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Major Crime Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Leila", "lastname": "Hassan", "username": "mcinv2", "email": "mc_inv2@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Major Crime Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Peter", "lastname": "Okoye", "username": "mcinv3", "email": "mc_inv3@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Major Crime Division"},
+
+    {"rank": "Deputy Sergeant", "firstname": "Nadia", "lastname": "Frisk", "username": "fci1", "email": "fc_inv1@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Financial Crime Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Victor", "lastname": "Chen", "username": "fci2", "email": "fc_inv2@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Financial Crime Division"},
+
+    {"rank": "Deputy Sergeant", "firstname": "Sara", "lastname": "Qadir", "username": "sci1", "email": "sc_inv1@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Specialized Crime Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Ibrahim", "lastname": "Khaled", "username": "sci2", "email": "sc_inv2@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Specialized Crime Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Helena", "lastname": "Stark", "username": "sci3", "email": "sc_inv3@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Specialized Crime Division"},
+
+    {"rank": "Deputy Sergeant", "firstname": "Kwame", "lastname": "Boateng", "username": "aci1", "email": "ac_inv1@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Anti-Corruption Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Marina", "lastname": "Silva", "username": "aci2", "email": "ac_inv2@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Anti-Corruption Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Oliver", "lastname": "Grant", "username": "aci3", "email": "ac_inv3@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Anti-Corruption Division"},
+
+    {"rank": "Deputy Sergeant", "firstname": "Yara", "lastname": "Nakamura", "username": "tci1", "email": "tc_inv1@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Technology Crime Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Jonas", "lastname": "Keller", "username": "tci2", "email": "tc_inv2@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Technology Crime Division"},
+    {"rank": "Deputy Sergeant", "firstname": "Fatima", "lastname": "Rahman", "username": "tci3", "email": "tc_inv3@example.com", "password": "AdminPass123!", "role": "investigator", "department": "Technology Crime Division"},
+
+    {"rank": "Deputy Sergeant", "firstname": "Fatima", "lastname": "Rahman", "username": "tci3", "email": "asergezu5@gmail.com", "password": "AdminPass123!", "role": "investigator", "department": "Technology Crime Division"}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "exhibits": [
+    {
+      "case_title": "Robbery Network Crackdown",
+      "entries": [
+        {"name": "Seized Mask", "description": "Black ski mask used in coordinated robbery", "quantity": 1},
+        {"name": "Getaway Vehicle Photo", "description": "Photo of suspected getaway car", "quantity": 1}
+      ]
+    },
+    {
+      "case_title": "Human Trafficking Ring Dismantled",
+      "entries": [
+        {"name": "Ledger Pages", "description": "Scanned ledger listing victim transport details", "quantity": 12},
+        {"name": "Confiscated Phones", "description": "Mobile devices seized from suspects", "quantity": 4}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "departments": [
+    {
+      "name": "Major Crime Division",
+      "description": "Handles organized crimes and major criminal activities",
+      "crimes": [
+        "Organized unique crimes",
+        "Human trafficking",
+        "Smuggling",
+        "Drug trafficking"
+      ],
+      "isActive": true
+    },
+    {
+      "name": "Specialized Crime Division",
+      "description": "Focuses on terrorism-related cases",
+      "crimes": ["Terrorism"],
+      "isActive": true
+    },
+    {
+      "name": "Financial Crime Division",
+      "description": "Investigates financial crimes and fraud",
+      "crimes": [
+        "Finance fraud",
+        "Tax",
+        "Custom commission case"
+      ],
+      "isActive": true
+    },
+    {
+      "name": "Anti-Corruption Division",
+      "description": "Handles all types of corruption cases",
+      "crimes": ["All type of corruption"],
+      "isActive": true
+    },
+    {
+      "name": "Technology Crime Division",
+      "description": "Investigates technology-based crimes",
+      "crimes": ["Technology based crimes"],
+      "isActive": true
+    }
+  ]
+}

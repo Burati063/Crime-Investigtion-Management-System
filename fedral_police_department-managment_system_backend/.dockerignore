@@ -1,0 +1,23 @@
+# Local envs and caches
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.mypy_cache/
+.pytest_cache/
+.cache/
+.DS_Store
+**/*.sqlite3
+**/*.db
+**/.coverage
+**/htmlcov/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.vscode/
+**/.idea/
+**/.tox/
+**/node_modules/

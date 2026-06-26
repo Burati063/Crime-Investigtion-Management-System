@@ -1,0 +1,128 @@
+{
+  "cases": [
+    {
+      "title": "Robbery Network Crackdown",
+      "crime": "Organized unique crimes",
+      "description": "Coordinated robberies across multiple districts.",
+      "location": "Central Market",
+      "reported_by": "Anonymous Caller",
+      "department": "Major Crime Division"
+    },
+    {
+      "title": "Human Trafficking Ring Dismantled",
+      "crime": "Human trafficking",
+      "description": "International human trafficking network uncovered and disrupted.",
+      "location": "Port District",
+      "reported_by": "NGO Tipline",
+      "department": "Major Crime Division"
+    },
+    {
+      "title": "Coastal Smuggling Interdiction",
+      "crime": "Smuggling",
+      "description": "Multiple contraband shipments intercepted off the eastern coast.",
+      "location": "Harbor Checkpoint",
+      "reported_by": "Maritime Patrol",
+      "department": "Major Crime Division"
+    },
+
+    {
+      "title": "Cross-Border Terror Cell Financing",
+      "crime": "Terrorism",
+      "description": "Suspicious fund flows tied to suspected terror cells.",
+      "location": "International Bank Hub",
+      "reported_by": "Financial Monitoring Unit",
+      "department": "Specialized Crime Division"
+    },
+    {
+      "title": "Domestic Radicalization Plot Monitoring",
+      "crime": "Terrorism",
+      "description": "Early-stage plot discovered via online radicalization monitoring.",
+      "location": "Suburban Safe House",
+      "reported_by": "Digital Intelligence Unit",
+      "department": "Specialized Crime Division"
+    },
+    {
+      "title": "International Terror Logistics Disruption",
+      "crime": "Terrorism",
+      "description": "Supply chain used for terror logistics identified and interrupted.",
+      "location": "Cargo Terminal",
+      "reported_by": "Customs Intelligence",
+      "department": "Specialized Crime Division"
+    },
+
+    {
+      "title": "Large Scale Procurement Fraud",
+      "crime": "Finance fraud",
+      "description": "Irregularities in multi-agency procurement process.",
+      "location": "Procurement Authority",
+      "reported_by": "Internal Audit",
+      "department": "Financial Crime Division"
+    },
+    {
+      "title": "Cryptocurrency Ponzi Scheme Exposure",
+      "crime": "Finance fraud",
+      "description": "Fraudulent investment platform defrauding retirees.",
+      "location": "Tech Park",
+      "reported_by": "Consumer Protection Desk",
+      "department": "Financial Crime Division"
+    },
+    {
+      "title": "Offshore Tax Evasion Network",
+      "crime": "Tax",
+      "description": "Layered shell companies masking taxable revenue streams.",
+      "location": "Corporate Registry",
+      "reported_by": "Tax Authority",
+      "department": "Financial Crime Division"
+    },
+
+    {
+      "title": "Ministerial Bribery Allegation",
+      "crime": "All type of corruption",
+      "description": "Alleged systemic kickback scheme involving senior officials.",
+      "location": "Government HQ",
+      "reported_by": "Whistleblower",
+      "department": "Anti-Corruption Division"
+    },
+    {
+      "title": "Municipal Contract Kickback Probe",
+      "crime": "All type of corruption",
+      "description": "Suspicious vendor rotation patterns in municipal tenders.",
+      "location": "City Tender Office",
+      "reported_by": "Procurement Auditor",
+      "department": "Anti-Corruption Division"
+    },
+    {
+      "title": "Customs Bribery Sweep",
+      "crime": "Custom commission case",
+      "description": "Pattern of facilitation payments at key customs checkpoint.",
+      "location": "Border Customs Gate",
+      "reported_by": "Internal Compliance",
+      "department": "Anti-Corruption Division"
+    },
+
+    {
+      "title": "Nationwide Ransomware Outbreak",
+      "crime": "Technology based crimes",
+      "description": "Critical infrastructure targeted by coordinated ransomware.",
+      "location": "Multiple Data Centers",
+      "reported_by": "Cyber Emergency Response Team",
+      "department": "Technology Crime Division"
+    },
+    {
+      "title": "Industrial Control System Breach",
+      "crime": "Technology based crimes",
+      "description": "Malware discovered in critical manufacturing PLC network.",
+      "location": "Industrial Zone 4",
+      "reported_by": "Plant Security Officer",
+      "department": "Technology Crime Division"
+    },
+    {
+      "title": "Massive Phishing Infrastructure Takedown",
+      "crime": "Technology based crimes",
+      "description": "Cluster of phishing domains distributing credential stealers.",
+      "location": "Registrar Network",
+      "reported_by": "ISP Abuse Desk",
+      "department": "Technology Crime Division"
+    }
+  ]
+}

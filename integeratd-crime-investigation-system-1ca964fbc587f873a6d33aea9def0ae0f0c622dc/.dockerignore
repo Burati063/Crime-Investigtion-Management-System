@@ -1,0 +1,25 @@
+# Node modules and Next.js build caches
+node_modules
+.next/cache
+
+# Git and VCS
+.git
+.gitignore
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+
+Dev_Dockerfile
+# Env files (pass at runtime)
+.env
+.env.*
+
+# Editor/OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db

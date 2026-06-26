@@ -1,0 +1,18 @@
+{
+  "persons": [
+    {
+      "case_title": "Robbery Network Crackdown",
+      "entries": [
+        {"type": "witness", "full_name": "Market Vendor Witness", "gender": "Female", "age": 42},
+        {"type": "accused", "full_name": "Robbery Suspect Alpha", "gender": "Male", "age": 29}
+      ]
+    },
+    {
+      "case_title": "Human Trafficking Ring Dismantled",
+      "entries": [
+        {"type": "witness", "full_name": "Port Security Informant", "gender": "Male", "age": 35},
+        {"type": "accuser", "full_name": "NGO Case Reporter", "gender": "Female", "age": 31}
+      ]
+    }
+  ]
+}

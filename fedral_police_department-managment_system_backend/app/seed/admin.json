@@ -1,0 +1,14 @@
+{
+  "admin": {
+    "firstname": "Admin",
+    "lastname": "User",
+    "username": "adminuser",
+    
+    "email": "admin@example.com",
+    "password": "AdminPass123!",
+    "role": {
+      "name": "admin",
+      "description": "System administrator with full access"
+    }
+  }
+}

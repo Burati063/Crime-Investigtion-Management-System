@@ -1,0 +1,79 @@
+
+
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env*
+
+Dev_Dockerfile
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# pnpm store cache
+.pnpm-store
+
+# turbo / build caches
+.turbo
+.cache
+
+# dist outputs (general)
+dist/
+
+# test coverage and outputs
+coverage/
+.nyc_output/
+
+# eslint/cache
+.eslintcache
+
+# parcel / rspack / other bundlers (just in case)
+.parcel-cache
+
+# logs
+logs/
+*.log
+*.log.*
+*.tgz
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories and settings
+.idea/
+.vscode/
+!.vscode/extensions.json
+# Uncomment if you want to keep workspace settings in git
+# !.vscode/settings.json
+
+# Temporary files
+*.swp
+*.swo
+*.tmp
+~$*
+
+# Docker local files
+.docker/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

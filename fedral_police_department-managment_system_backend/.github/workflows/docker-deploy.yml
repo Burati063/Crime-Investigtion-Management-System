@@ -1,0 +1,151 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Smoke test import
+        run: |
+          python - <<'PY'
+          import importlib
+          for m in ['flask','flask_sqlalchemy','flask_migrate','flask_bcrypt','flask_jwt_extended']:
+              importlib.import_module(m)
+          print('Imports OK')
+          PY
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: build-test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Compute image name (lowercase)
+        id: name
+        run: |
+          IMAGE_NAME="${{ env.REGISTRY }}/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')"
+          echo "IMAGE_NAME=${IMAGE_NAME}" >> $GITHUB_OUTPUT
+      - name: Log in to GHCR (push)
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GCHR_PAT }}
+      - name: Build & push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ steps.name.outputs.IMAGE_NAME }}:latest
+            ${{ steps.name.outputs.IMAGE_NAME }}:${{ github.sha }}
+          cache-from: type=registry,ref=${{ steps.name.outputs.IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ steps.name.outputs.IMAGE_NAME }}:buildcache,mode=max
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: docker
+    steps:
+      - name: Compute image name (lowercase)
+        id: name
+        run: |
+          IMAGE_NAME="${{ env.REGISTRY }}/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')"
+          echo "IMAGE_NAME=${IMAGE_NAME}" >> $GITHUB_OUTPUT
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_SSH_PORT || '22' }}
+          script: |
+            set -euo pipefail
+            GHCR_USER="${{ github.repository_owner }}"
+            if [ -n "${{ secrets.GCHR_PAT_READ }}" ]; then
+              echo "Logging into GHCR as ${GHCR_USER}"
+              echo "${{ secrets.GCHR_PAT_READ }}" | docker login ghcr.io -u "${GHCR_USER}" --password-stdin
+            else
+              echo "No GCHR_PAT_READ provided, attempting anonymous pull (requires public image)."
+            fi
+            # Determine project directory (default to $HOME/federal if not provided)
+            APP_DIR="${{ secrets.PROJECT_DIR || '' }}"
+            if [ -z "${APP_DIR}" ]; then
+              APP_DIR="${HOME}/federal"
+            fi
+
+           
+
+            # Create project directory (with sudo fallback) and change into it
+            if mkdir -p "${APP_DIR}" 2>/dev/null; then
+              :
+            else
+              echo "mkdir failed for ${APP_DIR}, attempting with sudo..."
+              if [ -n "${{ secrets.VPS_PASSWORD }}" ]; then
+                echo "${{ secrets.VPS_PASSWORD }}" | sudo -S mkdir -p "${APP_DIR}"
+                echo "${{ secrets.VPS_PASSWORD }}" | sudo -S chown -R "${USER}":"${USER}" "${APP_DIR}"
+              else
+                echo "No sudo password available and cannot create ${APP_DIR}. Exiting."; exit 1
+              fi
+            fi
+            cd "${APP_DIR}"
+
+            # Compute image and defaults
+            REGISTRY="${{ env.REGISTRY || 'ghcr.io' }}"
+            IMAGE="${REGISTRY}/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]'):latest"
+            CONTAINER_NAME="$(echo '${{ github.repository }}' | awk -F'/' '{print tolower($2)}')-app"
+            HOST_PORT="${{ secrets.HOST_PORT || '8000' }}"
+
+            # Pull latest image
+            docker pull "${IMAGE}"
+
+            # If a compose file exists, use compose; otherwise fall back to docker run
+            if [ -f "docker-compose.yml" ] || [ -f "docker-compose.yaml" ] || [ -f "compose.yml" ] || [ -f "compose.yaml" ]; then
+              if ! docker compose version >/dev/null 2>&1; then
+                echo "Docker Compose v2 not found. Installing plugin (Debian/Ubuntu)..."
+                echo "${{ secrets.VPS_PASSWORD }}" | sudo -S apt-get update -y
+                echo "${{ secrets.VPS_PASSWORD }}" | sudo -S apt-get install -y docker-compose-plugin || true
+              fi
+              echo "Compose file detected. Updating service..."
+              SERVICE="${{ secrets.VPS_COMPOSE_SERVICE || 'app' }}"
+              docker compose pull "${SERVICE}" || { echo "docker-compose.yml must define service ${SERVICE}"; exit 1; }
+              docker compose up -d "${SERVICE}"
+            else
+              echo "No compose file found. Running single container..."
+              docker stop federal >/dev/null 2>&1 || true
+              docker rm federal >/dev/null 2>&1 || true
+              docker run -d \
+                --name federal \
+                --network  digital_precriptions_api_net \
+                --restart unless-stopped \
+                -p "${HOST_PORT}:8000" \
+                "${IMAGE}"
+            fi
+
+            echo "Pruning unused images"
+            docker image prune -f || true
