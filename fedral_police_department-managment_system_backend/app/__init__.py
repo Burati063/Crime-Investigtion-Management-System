@@ -14,8 +14,11 @@ def create_app(config_class: type = Config):
     bcrypt.init_app(app)
     jwt.init_app(app)
 
-    # Enable CORS for all routes (adjust origins if needed)
-    CORS(app, resources={r"/*": {"origins": "*"}})
+    # Enable CORS — allow the frontend origin and any configured extra origins
+    import os
+    raw_origins = os.getenv("CORS_ORIGINS", "*")
+    allowed_origins = [o.strip() for o in raw_origins.split(",") if o.strip()] or ["*"]
+    CORS(app, resources={r"/*": {"origins": allowed_origins}})
 
     # register blueprints (lazy import to avoid circulars)
     from .routes.auth_routes import auth_bp

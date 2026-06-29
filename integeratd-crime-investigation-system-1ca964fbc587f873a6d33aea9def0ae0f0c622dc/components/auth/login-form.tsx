@@ -7,16 +7,19 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useLanguage } from "@/contexts/language-context"
 import { LanguageSwitcher } from "@/components/ui/language-switcher"
 import Image from "next/image"
-import Link from "next/link"
-// base URL used directly where needed; see lib/config
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { da } from "date-fns/locale"
+
+// Resolve the API base URL once.
+// Strip any trailing /api or trailing slash so callers just append /api/...
+function getApiBase(): string {
+  const raw = process.env.NEXT_PUBLIC_API_BASE_URL ?? ""
+  return raw.replace(/\/api\/?$/, "").replace(/\/$/, "")
+}
 
 export function LoginForm(){
   const [showPassword, setShowPassword] = useState(false)
@@ -48,9 +51,8 @@ export function LoginForm(){
 
     try {
       setIsLoading(true)
-  // Prefer a single full login URL from env; fallback to base + path if not set
-  const url =
-    `${process.env.NEXT_PUBLIC_API_BASE_URL || ""}/api/auth/login`
+
+      const url = `${getApiBase()}/api/auth/login`
     
       const res = await fetch(url, {
         method: "POST",
@@ -62,23 +64,31 @@ export function LoginForm(){
 
 
       if (!res.ok) {
-        // Map common status codes to messages
-        let message = "Login failed. Please try again."
+        // Try to read the server's own error message first
+        let serverMessage = ""
+        try {
+          const errBody = await res.json()
+          serverMessage = errBody?.message || ""
+        } catch { /* ignore parse failure */ }
+
+        let message = serverMessage || "Login failed. Please try again."
         switch (res.status) {
           case 400:
-            message = "Invalid request. Check your input and try again."
+            message = serverMessage || "Invalid request. Check your input and try again."
             break
           case 401:
+            // Backend raises 401 with message "Invalid credentials"
             message = "Invalid credentials. Please check your identifier and password."
             break
           case 403:
             message = "You don't have permission to sign in."
             break
           case 404:
-            message = "User not found."
+            // A real 404 means the nginx route is wrong — surface a clearer message
+            message = "Cannot reach the server. Please contact support."
             break
           case 422:
-            message = "Validation error. Please review your input."
+            message = serverMessage || "Validation error. Please review your input."
             break
           case 429:
             message = "Too many attempts. Please wait and try again."
@@ -97,27 +107,23 @@ export function LoginForm(){
         return
       }
 
-      // Persist user info (clean before write to avoid stale data)
+      // Extract token — backend sends it at top-level AND inside user object
+      const token = data.access_token || user.access_token || user.token || null
+
+      // Persist auth data (clear stale values first)
       try {
-        // Remove any previous auth-related items first
         localStorage.removeItem("user")
         localStorage.removeItem("userRole")
         localStorage.removeItem("username")
         localStorage.removeItem("rememberMe")
-        
         localStorage.removeItem("token")
 
-        // Write fresh values
         localStorage.setItem("user", JSON.stringify(user))
-        const role = user.role ?? null
-        const uname = user.username
-        const token = user.access_token || data.access_token || user.token || null
-        if (role) localStorage.setItem("userRole", role)
-        if (uname) localStorage.setItem("username", String(uname))
+        if (user.role) localStorage.setItem("userRole", user.role)
+        if (user.username) localStorage.setItem("username", String(user.username))
         if (token) localStorage.setItem("token", token)
-        if (rememberMe) localStorage.setItem("rememberMe", "true")
       } catch {
-        // Ignore storage errors
+        // Ignore storage errors (e.g. private browsing quota)
       }
 
       router.push("/dashboard")

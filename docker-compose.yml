@@ -13,6 +13,7 @@ services:
       - "5432:5432"
     networks:
       - db_net
+
   federal:
     build:
       context: ./fedral_police_department-managment_system_backend
@@ -23,26 +24,29 @@ services:
     env_file:
       - .env
     ports:
-      - "8080:8080"
-    
-
+      # host:container — Gunicorn binds to 8000 inside the container
+      - "8000:8000"
     networks:
       - api_net
       - db_net
+
   federal_front:
+    # NEXT_PUBLIC_ vars are baked into the JS bundle at BUILD time by Next.js.
+    # They must be passed as build args — setting them only in env_file has no effect.
     build:
       context: ./integeratd-crime-investigation-system-1ca964fbc587f873a6d33aea9def0ae0f0c622dc
       dockerfile: Dockerfile
+      args:
+        # Browser hits nginx on port 80 — origin is http://localhost
+        NEXT_PUBLIC_API_BASE_URL: http://localhost
     container_name: federal_front
-   
     env_file:
       - .env
     ports:
       - "3000:3000"
-    
-
     networks:
       - api_net
+
   nginx:
     image: nginx:1.25-alpine
     container_name: nginx_federal
@@ -55,6 +59,7 @@ services:
       - "80:80"
     networks:
       - api_net
+
 volumes:
   federal_data:
 

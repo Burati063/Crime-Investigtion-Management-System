@@ -1,11 +1,11 @@
 {
   "admin": {
-    "firstname": "Admin",
-    "lastname": "User",
+    "first_name": "Admin",
+    "last_name": "User",
     "username": "adminuser",
-    
     "email": "admin@example.com",
     "password": "AdminPass123!",
+    "rank": "Commissioner General",
     "role": {
       "name": "admin",
       "description": "System administrator with full access"
